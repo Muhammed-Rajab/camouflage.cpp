@@ -37,12 +37,15 @@ int main()
     const int GRID_WIDTH = (screenWidth - 2 * PADDING_X) / COL_COUNT;
     const int GRID_HEIGHT = (screenHeight - 2 * PADDING_Y) / ROW_COUNT;
 
-    const Color BACKGROUND = {0, 255, 0};
-    const HSLColor BACKGROUND_HSL = RGBToHSL(BACKGROUND.r, BACKGROUND.g, BACKGROUND.b);
+    const HSLColor BACKGROUND_HSL = {120, 0.5, 0.5};
+    const RGBColor BACKGROUND_RGB = HSLToRGB(BACKGROUND_HSL.h, BACKGROUND_HSL.s, BACKGROUND_HSL.l);
+    const Color BACKGROUND = {BACKGROUND_RGB.r, BACKGROUND_RGB.g, BACKGROUND_RGB.b};
 
     const std::size_t POPULATION_SIZE = COL_COUNT * ROW_COUNT;
 
-    std::vector<HSLColor> population = generateRandomPopulation(POPULATION_SIZE);
+    PopulationVector population = generateRandomPopulation(POPULATION_SIZE);
+    SizeTVector fitnessScore = calculatePopulationFitness(population, BACKGROUND_HSL);
+    SizeTVector sortedFitnessScoreIndices = getSortedFitnessScoresIndices(fitnessScore);
 
     while (!WindowShouldClose())
     {
@@ -51,7 +54,10 @@ int main()
 
         // * YOU DRAWING STARTS HERE ------------>
 
+        // ! RENDER POPULATION
         renderPopulation(population, GRID_WIDTH, GRID_HEIGHT, ROW_COUNT, COL_COUNT, OFFSET_X, OFFSET_Y);
+
+        // ! CALCULATE FITNESS
         DrawFPS(10, 10);
         EndDrawing();
 
