@@ -29,8 +29,8 @@ int main()
     SetTargetFPS(60);
 
     // ! ALGO SETUP
-    const int COL_COUNT = 10;
-    const int ROW_COUNT = 10;
+    const int COL_COUNT = 20;
+    const int ROW_COUNT = 20;
 
     const int PADDING_X = 30;
     const int PADDING_Y = 30;

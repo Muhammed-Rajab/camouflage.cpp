@@ -2,23 +2,42 @@
 #define HSL_4_CAMOUFLAGE_H
 
 #include <cmath>
+#include <sstream>
+#include <iostream>
 
 struct HSLColor
 {
-    int h;
-    float s;
-    float l;
+    int h = 0;
+    double s = 0.0;
+    double l = 0.0;
+
+    std::string string()
+    {
+        std::ostringstream oss;
+        oss << "h: " << h << " | " << "s: " << s << " | " << "l: " << l;
+        return oss.str();
+    }
 };
 
 struct RGBColor
 {
-    int r;
-    int g;
-    int b;
+    int r = 0;
+    int g = 0;
+    int b = 0;
+
+    std::string string()
+    {
+        std::ostringstream oss;
+        oss << "r: " << r << " | " << "g: " << g << " | " << "b: " << b;
+        return oss.str();
+    }
 };
 
 RGBColor HSLToRGB(int h, float s, float l)
 {
+
+    h = h % 360;
+
     float c = (1 - std::fabs(2 * l - 1)) * s;
 
     float x = c * (1 - fabs(fmod(h / 60.0f, 2) - 1));
@@ -68,5 +87,62 @@ RGBColor HSLToRGB(int h, float s, float l)
         static_cast<int>(round((G1 + m) * 255)),
         static_cast<int>(round((B1 + m) * 255)),
     };
+}
+
+HSLColor RGBToHSL(int r, int g, int b)
+{
+    // NORMALISE
+    double R1 = r / 255.0;
+    double B1 = b / 255.0;
+    double G1 = g / 255.0;
+
+    // FIND MAX AND MIN
+    double Cmax = fmax(R1, fmax(G1, B1));
+    double Cmin = fmin(R1, fmin(G1, B1));
+    double delta = Cmax - Cmin;
+
+    // CALCULATE L
+    double L = (Cmax + Cmin) / 2;
+
+    // CALCULATE S
+    double S = 0;
+    if (delta == 0)
+    {
+        S = 0;
+    }
+    else if (L < 0.5)
+    {
+        S = delta / (Cmax + Cmin);
+    }
+    else
+    {
+        S = delta / (2.0f - Cmax - Cmin);
+    }
+
+    // CALCULATE HUE
+    double H = 0;
+    if (delta == 0)
+    {
+        H = 0;
+    }
+    else if (Cmax == R1)
+    {
+        H = 60 * fmod(((G1 - B1) / delta), 6);
+    }
+    else if (Cmax == G1)
+    {
+        H = 60 * (((B1 - R1) / delta) + 2);
+    }
+    else if (Cmax == B1)
+    {
+        H = 60 * (((R1 - G1) / delta) + 4);
+    }
+
+    if (H < 0)
+    {
+        H += 360;
+    }
+
+    return HSLColor{(int)round(H), S, L};
 }
 #endif
