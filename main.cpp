@@ -2,9 +2,8 @@
 #include <iostream>
 #include <vector>
 
-#include "algos.h"
-#include "hsl.h"
 #include "ga.h"
+#include "hsl.h"
 
 int main()
 {
@@ -39,7 +38,7 @@ int main()
 
     const HSLColor BACKGROUND_HSL = {120, 0.5, 0.5};
     const RGBColor BACKGROUND_RGB = HSLToRGB(BACKGROUND_HSL.h, BACKGROUND_HSL.s, BACKGROUND_HSL.l);
-    const Color BACKGROUND = {BACKGROUND_RGB.r, BACKGROUND_RGB.g, BACKGROUND_RGB.b};
+    const Color BACKGROUND = {(unsigned char)BACKGROUND_RGB.r, (unsigned char)BACKGROUND_RGB.g, (unsigned char)BACKGROUND_RGB.b};
 
     const std::size_t POPULATION_SIZE = COL_COUNT * ROW_COUNT;
 

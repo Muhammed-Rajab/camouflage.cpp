@@ -5,23 +5,25 @@
 #include <cstdlib>
 #include <algorithm>
 
+// #include "ga.h"
+
 int GenerateRandomValue(int min, int max)
 {
     return min + rand() % (max - min + 1);
 }
 
-SizeTVector argsort(const SizeTVector &arr)
-{
-    SizeTVector indices(arr.size());
-    for (std::size_t index = 0; index < arr.size(); ++index)
-    {
-        indices[index] = index;
-    }
+// SizeTVector argsort(const SizeTVector &arr)
+// {
+//     SizeTVector indices(arr.size());
+//     for (std::size_t index = 0; index < arr.size(); ++index)
+//     {
+//         indices[index] = index;
+//     }
 
-    std::sort(indices.begin(), indices.end(), [&arr](std::size_t a, std::size_t b)
-              { return arr[a] > arr[b]; });
+//     std::sort(indices.begin(), indices.end(), [&arr](std::size_t a, std::size_t b)
+//               { return arr[a] > arr[b]; });
 
-    return indices;
-}
+//     return indices;
+// }
 
 #endif
