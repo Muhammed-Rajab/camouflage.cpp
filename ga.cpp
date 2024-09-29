@@ -138,16 +138,12 @@ HSLColor singlePointCrossOver(const HSLColor &elite, const HSLColor &normie, con
 
     int newHue = (elite.h * w1 + normie.h * w2);
 
-    std::cout << "h1: " << elite.h << " h2: " << normie.h << "\n";
-    std::cout << "w1: " << w1 << " w2: " << w2 << "\n";
-    std::cout << "new hue: " << newHue << "\n";
-
     // ! MUTATION?!?!??!
-    const double MUTATION_RATE = 0.1;
+    const double MUTATION_RATE = 0.005;
     if (rand() % 100 < MUTATION_RATE * 100)
     {
-        int mutationValue = GenerateRandomValue(-5, 5); // Small mutation range
-        newHue = (newHue + mutationValue) % 360;
+        int mutationValue = GenerateRandomValue(-100, 100); // Small mutation range
+        newHue = abs((newHue + mutationValue)) % 360;
         std::cout << "Mutation applied! New hue after mutation: " << newHue << "\n";
     }
 

@@ -21,11 +21,11 @@ int main()
     SetConfigFlags(FLAG_BORDERLESS_WINDOWED_MODE);
     SetConfigFlags(FLAG_WINDOW_HIGHDPI);
     InitWindow(screenWidth, screenHeight, title);
-    SetTargetFPS(1);
+    SetTargetFPS(6);
 
     // ! ALGO SETUP
-    const int COL_COUNT = 10;
-    const int ROW_COUNT = 10;
+    const int COL_COUNT = 50;
+    const int ROW_COUNT = 50;
 
     const int PADDING_X = 25;
     const int PADDING_Y = 25;
@@ -36,16 +36,18 @@ int main()
     const int GRID_WIDTH = (screenWidth - 2 * PADDING_X) / COL_COUNT;
     const int GRID_HEIGHT = (screenHeight - 2 * PADDING_Y) / ROW_COUNT;
 
-    const HSLColor BACKGROUND_HSL = {120, 0.5, 0.5};
-    const RGBColor BACKGROUND_RGB = HSLToRGB(BACKGROUND_HSL.h, BACKGROUND_HSL.s, BACKGROUND_HSL.l);
-    const Color BACKGROUND = {(unsigned char)BACKGROUND_RGB.r, (unsigned char)BACKGROUND_RGB.g, (unsigned char)BACKGROUND_RGB.b};
-
     const std::size_t POPULATION_SIZE = COL_COUNT * ROW_COUNT;
 
     PopulationVector population = generateRandomPopulation(POPULATION_SIZE);
 
     while (!WindowShouldClose())
     {
+        // CALCULATING THE BACKGROUND
+        Vector2 mPos = GetMousePosition();
+        HSLColor BACKGROUND_HSL = {(int)((int)mPos.x % 360), 0.5, 0.5};
+        RGBColor BACKGROUND_RGB = HSLToRGB(BACKGROUND_HSL.h, BACKGROUND_HSL.s, BACKGROUND_HSL.l);
+        Color BACKGROUND = {(unsigned char)BACKGROUND_RGB.r, (unsigned char)BACKGROUND_RGB.g, (unsigned char)BACKGROUND_RGB.b};
+
         BeginDrawing();
         ClearBackground(BACKGROUND);
 
