@@ -21,7 +21,7 @@ SizeTVector getSortedFitnessScoresIndices(const SizeTVector &fitnessScore);
 
 void displayFitnessScore(const SizeTVector &fitnessScore);
 
-void renderPopulation(const PopulationVector &population, int GRID_WIDTH, int GRID_HEIGHT, std::size_t ROW_COUNT, std::size_t COL_COUNT, int OFFSET_X, int OFFSET_Y);
+void renderPopulation(const PopulationVector &population, int xPos, int yPos, int width, int height, std::size_t ROW_COUNT, std::size_t COL_COUNT, bool border);
 
 HSLColor singlePointCrossOver(const HSLColor &elite, const HSLColor &normie, const std::size_t eliteFitnessScore, const std::size_t normieFitnessScore);
 

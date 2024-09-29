@@ -56,15 +56,19 @@ void displayFitnessScore(const SizeTVector &fitnessScore)
     }
 }
 
-void renderPopulation(const PopulationVector &population, int GRID_WIDTH, int GRID_HEIGHT, std::size_t ROW_COUNT, std::size_t COL_COUNT, int OFFSET_X, int OFFSET_Y)
+void renderPopulation(const PopulationVector &population, int xPos, int yPos, int width, int height, std::size_t ROW_COUNT, std::size_t COL_COUNT, bool border)
 {
     std::size_t pos = 0;
+
+    const std::size_t GRID_WIDTH = width / COL_COUNT;
+    const std::size_t GRID_HEIGHT = height / ROW_COUNT;
+
     for (std::size_t row = 0; row < ROW_COUNT; ++row)
     {
-        const int y = row * GRID_HEIGHT + OFFSET_Y;
+        const int y = row * GRID_HEIGHT + yPos;
         for (std::size_t col = 0; col < COL_COUNT; ++col)
         {
-            const int x = col * GRID_WIDTH + OFFSET_X;
+            const int x = col * GRID_WIDTH + xPos;
             const int index = (COL_COUNT * row + col);
 
             const HSLColor &hsl = population.at(index);
@@ -74,6 +78,11 @@ void renderPopulation(const PopulationVector &population, int GRID_WIDTH, int GR
 
             pos += 3;
         }
+    }
+
+    if (border)
+    {
+        DrawRectangleLinesEx(Rectangle{(float)xPos - 4, (float)yPos - 4, (float)GRID_WIDTH * COL_COUNT + 4, (float)GRID_HEIGHT * ROW_COUNT + 4}, 4, WHITE);
     }
 }
 

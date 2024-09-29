@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include <iostream>
+#include <sstream>
 #include <vector>
 
 #include "ga.h"
@@ -12,8 +13,8 @@ int main()
     srand(time(NULL));
 
     // ! WINDOW PROPERTIES
-    const int screenWidth = 500;
-    const int screenHeight = 500;
+    const int screenWidth = 800;
+    const int screenHeight = 800;
     const char *title = "Camouflage";
 
     // ! RAYLIB SETUP
@@ -21,11 +22,13 @@ int main()
     SetConfigFlags(FLAG_BORDERLESS_WINDOWED_MODE);
     SetConfigFlags(FLAG_WINDOW_HIGHDPI);
     InitWindow(screenWidth, screenHeight, title);
-    SetTargetFPS(3);
+    SetTargetFPS(12);
 
     // ! ALGO SETUP
-    const int COL_COUNT = 10;
-    const int ROW_COUNT = 10;
+    std::size_t generation = 0;
+
+    const int COL_COUNT = 50;
+    const int ROW_COUNT = 50;
 
     const int PADDING_X = 25;
     const int PADDING_Y = 25;
@@ -54,10 +57,7 @@ int main()
         // * YOU DRAWING STARTS HERE ------------>
 
         // ! RENDER POPULATION
-        renderPopulation(population, GRID_WIDTH, GRID_HEIGHT, ROW_COUNT, COL_COUNT, OFFSET_X, OFFSET_Y);
-
-        // ! RENDER BORDER
-        DrawRectangleLinesEx(Rectangle{OFFSET_X - 4, OFFSET_Y - 4, GRID_WIDTH * COL_COUNT + 4, GRID_HEIGHT * ROW_COUNT + 4}, 4, WHITE);
+        renderPopulation(population, (screenWidth / 2) - 300, (screenHeight / 2) - 300, 600, 600, ROW_COUNT, COL_COUNT, true);
 
         // ! CALCULATE POPULATION FITNESS
         SizeTVector fitnessScore = calculatePopulationFitness(population, BACKGROUND_HSL);
@@ -65,13 +65,22 @@ int main()
         // ! GET SORTED FITNESS
         SizeTVector sortedFitnessScoreIndices = getSortedFitnessScoresIndices(fitnessScore);
 
+        // ! RENDER STATS
+        std::ostringstream oss;
+        oss << "GEN: " << generation << "\n\n";
+        oss << "TOP FITNESS: " << fitnessScore.at(sortedFitnessScoreIndices.at(0)) << "\n\n";
+        oss << "MEDIAN FITNESS: " << fitnessScore.at(sortedFitnessScoreIndices.at(sortedFitnessScoreIndices.size() / 2)) << "\n\n";
+        oss << "WORST FITNESS: " << fitnessScore.at(sortedFitnessScoreIndices.at(sortedFitnessScoreIndices.size() - 1)) << "\n";
+        DrawText(oss.str().c_str(), 10, 10, 20, WHITE);
+
         // ! GENERATE NEXT POPULATION FROM CURRENT POPULATION, SORTED FITNESS SCORE INDICES, AND FITNESS SCORES.
         population = getNextGeneration(population, fitnessScore, sortedFitnessScoreIndices);
 
-        DrawFPS(10, 10);
+        // DrawFPS(10, 10);
         EndDrawing();
 
         // break;
+        ++generation;
     }
 
     CloseWindow();
