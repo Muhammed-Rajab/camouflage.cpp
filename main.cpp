@@ -43,8 +43,6 @@ int main()
     const std::size_t POPULATION_SIZE = COL_COUNT * ROW_COUNT;
 
     PopulationVector population = generateRandomPopulation(POPULATION_SIZE);
-    SizeTVector fitnessScore = calculatePopulationFitness(population, BACKGROUND_HSL);
-    SizeTVector sortedFitnessScoreIndices = getSortedFitnessScoresIndices(fitnessScore);
 
     while (!WindowShouldClose())
     {
@@ -56,7 +54,14 @@ int main()
         // ! RENDER POPULATION
         renderPopulation(population, GRID_WIDTH, GRID_HEIGHT, ROW_COUNT, COL_COUNT, OFFSET_X, OFFSET_Y);
 
-        // ! CALCULATE FITNESS
+        // ! CALCULATE POPULATION FITNESS
+        SizeTVector fitnessScore = calculatePopulationFitness(population, BACKGROUND_HSL);
+
+        // ! GET SORTED FITNESS
+        SizeTVector sortedFitnessScoreIndices = getSortedFitnessScoresIndices(fitnessScore);
+
+        // ! GENERATE NEXT POPULATION FROM CURRENT POPULATION, SORTED FITNESS SCORE INDICES, AND FITNESS SCORES.
+
         DrawFPS(10, 10);
         EndDrawing();
 
