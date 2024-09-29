@@ -16,9 +16,7 @@ PopulationVector generateRandomPopulation(std::size_t count)
         // ! BUT SAME SATURATION AND LIGHTNESS, TO KEEP THINGS SIMPLE
         population.at(index) = HSLColor{
             GenerateRandomValue(0, 360),
-            // GenerateRandomValue(0, 1000) / 1000.0f,
             0.5,
-            // GenerateRandomValue(0, 1000) / 1000.0f,
             0.5,
         };
     }
@@ -105,8 +103,6 @@ PopulationVector getNextGeneration(const PopulationVector &population, const Siz
         const HSLColor child = singlePointCrossOver(elite, normie, fitnessScore.at(sortedFitnessScoreIndices.at(eliteIndex)), fitnessScore.at(sortedFitnessScoreIndices.at(normieIndex)));
 
         newPopulation.at(index) = child;
-
-        // std::cout << "index:" << index << "\n";
     }
 
     return newPopulation;

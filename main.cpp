@@ -24,8 +24,8 @@ int main()
     SetTargetFPS(3);
 
     // ! ALGO SETUP
-    const int COL_COUNT = 50;
-    const int ROW_COUNT = 50;
+    const int COL_COUNT = 10;
+    const int ROW_COUNT = 10;
 
     const int PADDING_X = 25;
     const int PADDING_Y = 25;
@@ -42,7 +42,7 @@ int main()
 
     while (!WindowShouldClose())
     {
-        // CALCULATING THE BACKGROUND
+        // ! CALCULATING THE BACKGROUND
         Vector2 mPos = GetMousePosition();
         HSLColor BACKGROUND_HSL = {(int)((int)mPos.x % 360), 0.5, 0.5};
         RGBColor BACKGROUND_RGB = HSLToRGB(BACKGROUND_HSL.h, BACKGROUND_HSL.s, BACKGROUND_HSL.l);
@@ -55,6 +55,9 @@ int main()
 
         // ! RENDER POPULATION
         renderPopulation(population, GRID_WIDTH, GRID_HEIGHT, ROW_COUNT, COL_COUNT, OFFSET_X, OFFSET_Y);
+
+        // ! RENDER BORDER
+        DrawRectangleLinesEx(Rectangle{OFFSET_X - 4, OFFSET_Y - 4, GRID_WIDTH * COL_COUNT + 4, GRID_HEIGHT * ROW_COUNT + 4}, 4, WHITE);
 
         // ! CALCULATE POPULATION FITNESS
         SizeTVector fitnessScore = calculatePopulationFitness(population, BACKGROUND_HSL);
