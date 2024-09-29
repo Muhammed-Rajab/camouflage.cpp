@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "hsl.h"
+#include "algos.h"
 #include "raylib.h"
 
 using PopulationVector = std::vector<HSLColor>;
@@ -21,5 +22,9 @@ SizeTVector getSortedFitnessScoresIndices(const SizeTVector &fitnessScore);
 void displayFitnessScore(const SizeTVector &fitnessScore);
 
 void renderPopulation(const PopulationVector &population, int GRID_WIDTH, int GRID_HEIGHT, std::size_t ROW_COUNT, std::size_t COL_COUNT, int OFFSET_X, int OFFSET_Y);
+
+HSLColor singlePointCrossOver(const HSLColor &elite, const HSLColor &normie);
+
+PopulationVector getNextGeneration(const PopulationVector &population, const SizeTVector &fitnessScore, const SizeTVector &sortedFitnessScoreIndices);
 
 #endif
