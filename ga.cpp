@@ -39,7 +39,7 @@ SizeTVector calculatePopulationFitness(const PopulationVector &population, const
 
     for (const HSLColor &individual : population)
     {
-        fitnessScores.push_back(calculateHueDifference(background.h, individual.h));
+        fitnessScores.push_back(360 - calculateHueDifference(background.h, individual.h));
     }
 
     return fitnessScores;
@@ -47,8 +47,7 @@ SizeTVector calculatePopulationFitness(const PopulationVector &population, const
 
 SizeTVector getSortedFitnessScoresIndices(const SizeTVector &fitnessScore)
 {
-    // return argsort(fitnessScore);
-    return fitnessScore;
+    return argsort(fitnessScore);
 }
 
 void displayFitnessScore(const SizeTVector &fitnessScore)
@@ -80,51 +79,81 @@ void renderPopulation(const PopulationVector &population, int GRID_WIDTH, int GR
     }
 }
 
-HSLColor singlePointCrossOver(const HSLColor &elite, const HSLColor &normie)
-{
-    int diff = abs(elite.h - normie.h);
-    int newHue = 0;
-    if (diff > 180)
-    {
-        // If the hues are on opposite sides of the color wheel
-        newHue = (elite.h + normie.h + 360) / 2 % 360;
-    }
-    else
-    {
-        // Regular average for small differences
-        newHue = (elite.h + normie.h) / 2;
-    }
-    return HSLColor{
-        newHue,
-        0.5,
-        0.5,
-    };
-}
-
 PopulationVector getNextGeneration(const PopulationVector &population, const SizeTVector &fitnessScore, const SizeTVector &sortedFitnessScoreIndices)
 {
     const double ELITE_RATIO = 0.05;
     std::size_t maxEliteIndex = static_cast<std::size_t>(ELITE_RATIO * sortedFitnessScoreIndices.size());
 
     PopulationVector newPopulation(population.size());
-    newPopulation.reserve(population.size());
 
     // Append elites to population
-    for (std::size_t index = 0; index < maxEliteIndex; index++)
+    for (std::size_t index = 0; index < maxEliteIndex; ++index)
     {
         newPopulation.at(index) = (population.at(sortedFitnessScoreIndices.at(index)));
     }
 
     for (std::size_t index = maxEliteIndex; index < population.size(); ++index)
     {
-        const HSLColor elite = population.at(sortedFitnessScoreIndices.at(GenerateRandomValue(0, maxEliteIndex)));
+        const std::size_t eliteIndex = GenerateRandomValue(0, maxEliteIndex - 1);
 
-        const HSLColor normie = population.at(sortedFitnessScoreIndices.at(GenerateRandomValue(maxEliteIndex, sortedFitnessScoreIndices.size())));
+        const HSLColor elite = population.at(sortedFitnessScoreIndices.at(eliteIndex));
 
-        const HSLColor child = singlePointCrossOver(elite, normie);
+        const std::size_t normieIndex = GenerateRandomValue(maxEliteIndex, sortedFitnessScoreIndices.size() - 1);
+
+        const HSLColor normie = population.at(sortedFitnessScoreIndices.at(normieIndex));
+
+        const HSLColor child = singlePointCrossOver(elite, normie, fitnessScore.at(sortedFitnessScoreIndices.at(eliteIndex)), fitnessScore.at(sortedFitnessScoreIndices.at(normieIndex)));
 
         newPopulation.at(index) = child;
+
+        // std::cout << "index:" << index << "\n";
     }
 
     return newPopulation;
+}
+
+HSLColor singlePointCrossOver(const HSLColor &elite, const HSLColor &normie, const std::size_t eliteFitnessScore, const std::size_t normieFitnessScore)
+{
+    // int diff = abs(elite.h - normie.h);
+    // int newHue;
+    // if (diff > 180)
+    // {
+    //     // Adjust for circular hue difference
+    //     newHue = (elite.h + normie.h + 360) / 2 % 360;
+    // }
+    // else
+    // {
+    //     newHue = (elite.h + normie.h) / 2;
+    // }
+
+    // return HSLColor{
+    //     newHue % 360,
+    //     0.5,
+    //     0.5,
+    // };
+
+    double totalFitness = eliteFitnessScore + normieFitnessScore;
+    double w1 = eliteFitnessScore / totalFitness;
+    double w2 = normieFitnessScore / totalFitness;
+
+    int newHue = (elite.h * w1 + normie.h * w2);
+
+    std::cout << "h1: " << elite.h << " h2: " << normie.h << "\n";
+    std::cout << "w1: " << w1 << " w2: " << w2 << "\n";
+    std::cout << "new hue: " << newHue << "\n";
+
+    // ! MUTATION?!?!??!
+    const double MUTATION_RATE = 0.1;
+    if (rand() % 100 < MUTATION_RATE * 100)
+    {
+        int mutationValue = GenerateRandomValue(-5, 5); // Small mutation range
+        newHue = (newHue + mutationValue) % 360;
+        std::cout << "Mutation applied! New hue after mutation: " << newHue << "\n";
+    }
+
+    return HSLColor{
+        newHue % 360,
+        0.5,
+        0.5,
+    };
 }

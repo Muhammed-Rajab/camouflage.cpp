@@ -21,11 +21,11 @@ int main()
     SetConfigFlags(FLAG_BORDERLESS_WINDOWED_MODE);
     SetConfigFlags(FLAG_WINDOW_HIGHDPI);
     InitWindow(screenWidth, screenHeight, title);
-    // SetTargetFPS(60);
+    SetTargetFPS(1);
 
     // ! ALGO SETUP
-    const int COL_COUNT = 75;
-    const int ROW_COUNT = 75;
+    const int COL_COUNT = 10;
+    const int ROW_COUNT = 10;
 
     const int PADDING_X = 25;
     const int PADDING_Y = 25;
@@ -61,7 +61,7 @@ int main()
         SizeTVector sortedFitnessScoreIndices = getSortedFitnessScoresIndices(fitnessScore);
 
         // ! GENERATE NEXT POPULATION FROM CURRENT POPULATION, SORTED FITNESS SCORE INDICES, AND FITNESS SCORES.
-        // population = getNextGeneration(population, fitnessScore, sortedFitnessScoreIndices);
+        population = getNextGeneration(population, fitnessScore, sortedFitnessScoreIndices);
 
         DrawFPS(10, 10);
         EndDrawing();
