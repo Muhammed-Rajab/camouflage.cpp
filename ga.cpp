@@ -114,23 +114,6 @@ PopulationVector getNextGeneration(const PopulationVector &population, const Siz
 
 HSLColor singlePointCrossOver(const HSLColor &elite, const HSLColor &normie, const std::size_t eliteFitnessScore, const std::size_t normieFitnessScore)
 {
-    // int diff = abs(elite.h - normie.h);
-    // int newHue;
-    // if (diff > 180)
-    // {
-    //     // Adjust for circular hue difference
-    //     newHue = (elite.h + normie.h + 360) / 2 % 360;
-    // }
-    // else
-    // {
-    //     newHue = (elite.h + normie.h) / 2;
-    // }
-
-    // return HSLColor{
-    //     newHue % 360,
-    //     0.5,
-    //     0.5,
-    // };
 
     double totalFitness = eliteFitnessScore + normieFitnessScore;
     double w1 = eliteFitnessScore / totalFitness;
@@ -138,13 +121,11 @@ HSLColor singlePointCrossOver(const HSLColor &elite, const HSLColor &normie, con
 
     int newHue = (elite.h * w1 + normie.h * w2);
 
-    // ! MUTATION?!?!??!
-    const double MUTATION_RATE = 0.005;
+    const double MUTATION_RATE = 0.0005;
     if (rand() % 100 < MUTATION_RATE * 100)
     {
-        int mutationValue = GenerateRandomValue(-100, 100); // Small mutation range
+        int mutationValue = GenerateRandomValue(-360, 360);
         newHue = abs((newHue + mutationValue)) % 360;
-        std::cout << "Mutation applied! New hue after mutation: " << newHue << "\n";
     }
 
     return HSLColor{

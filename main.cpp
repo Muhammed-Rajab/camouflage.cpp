@@ -21,7 +21,7 @@ int main()
     SetConfigFlags(FLAG_BORDERLESS_WINDOWED_MODE);
     SetConfigFlags(FLAG_WINDOW_HIGHDPI);
     InitWindow(screenWidth, screenHeight, title);
-    SetTargetFPS(6);
+    SetTargetFPS(3);
 
     // ! ALGO SETUP
     const int COL_COUNT = 50;
