@@ -13,12 +13,8 @@ float TextToFloat(const char *text)
 void RenderGUI(GA &ga)
 {
     // ! TURN ON/OFF BORDER
-    if (GuiCheckBox({100, 100, 20, 20}, "border", &ga.border))
-    {
-        std::cout << "Border: " << (ga.border ? "ON" : "OFF") << "\n";
-    }
+    (GuiCheckBox({100, 100, 20, 20}, "border", &ga.border));
 
-    // ! CHANGE BACKGROUND HUE
     float hue = ga.BACKGROUND.h;
     if (GuiSlider({100, 120, 100, 20}, "", "hue", &hue, 0, 360))
     {
