@@ -5,6 +5,8 @@
 #include <sstream>
 #include <iostream>
 
+#include "raylib.h"
+
 struct HSLColor
 {
     int h = 0;
@@ -34,6 +36,13 @@ struct RGBColor
 };
 
 RGBColor HSLToRGB(int h, float s, float l);
+RGBColor HSLToRGB(HSLColor hsl);
+
+// ! ONLY IF RAYLIB IS USED
+Color HSLToColor(HSLColor hsl);
+Color RGBToColor(RGBColor rgb);
+
 HSLColor RGBToHSL(int r, int g, int b);
+HSLColor RGBToHSL(RGBColor rgb);
 
 #endif

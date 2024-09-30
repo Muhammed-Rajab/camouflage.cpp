@@ -115,3 +115,24 @@ HSLColor RGBToHSL(int r, int g, int b)
 
     return HSLColor{(int)round(H), S, L};
 }
+
+RGBColor HSLToRGB(HSLColor hsl)
+{
+    return HSLToRGB(hsl.h, hsl.l, hsl.l);
+}
+
+HSLColor RGBToHSL(RGBColor rgb)
+{
+    return RGBToHSL(rgb.r, rgb.g, rgb.b);
+}
+
+Color HSLToColor(HSLColor hsl)
+{
+    RGBColor rgb = HSLToRGB(hsl);
+    return Color{(unsigned char)rgb.r, (unsigned char)rgb.g, (unsigned char)rgb.b, 255};
+}
+
+Color RGBToColor(RGBColor rgb)
+{
+    return Color{(unsigned char)rgb.r, (unsigned char)rgb.g, (unsigned char)rgb.b, 255};
+}

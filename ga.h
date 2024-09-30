@@ -52,7 +52,10 @@ public:
     HSLColor BACKGROUND = {0, 0, 0};
 
     // ! UI STATE
-    bool border = false;
+    bool border = true;
+
+    // ! SETTERS
+    void SetBackgroundHue(int hue);
 
     // ! CONSTRUCTORS
     GA(std::size_t row_count, std::size_t col_count, double mutation_rate, HSLColor background);

@@ -179,3 +179,8 @@ Stats GA::Stat()
 
     return s;
 }
+
+void GA::SetBackgroundHue(int hue)
+{
+    this->BACKGROUND.h = hue;
+}
