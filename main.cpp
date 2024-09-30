@@ -23,7 +23,7 @@ int main()
     SetConfigFlags(FLAG_BORDERLESS_WINDOWED_MODE);
     SetConfigFlags(FLAG_WINDOW_HIGHDPI);
     InitWindow(800, 800, title);
-    SetTargetFPS(12);
+    SetTargetFPS(60);
 
     const int screenWidth = GetMonitorWidth(0);
     const int screenHeight = GetMonitorHeight(0);
@@ -41,6 +41,8 @@ int main()
 
     GA ga(ROW_COUNT, COL_COUNT, 0.0005, BACKGROUND_HSL);
 
+    std::size_t frameCount = 0;
+
     while (!WindowShouldClose())
     {
         BeginDrawing();
@@ -48,12 +50,20 @@ int main()
         ClearBackground(HSLToColor(ga.BACKGROUND));
 
         // * YOU DRAWING STARTS HERE ------------>
+
         ga.Render((screenWidth / 2) - 300, (screenHeight / 2) - 300, 600, 600);
-        ga.Update();
+
+        if (frameCount % 60 == 0)
+        {
+            ga.Update();
+            frameCount %= 60;
+        }
 
         RenderGUI(ga, screenWidth, screenHeight, (screenWidth / 2) - 300, (screenHeight / 2) - 300, 600, 600);
 
         EndDrawing();
+
+        ++frameCount;
     }
 
     CloseWindow();
