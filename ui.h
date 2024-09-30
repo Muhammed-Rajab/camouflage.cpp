@@ -11,7 +11,7 @@ float TextToFloat(const char *text)
 #include "raylib.h"
 #include "ga.h"
 
-void RenderGUI(GA &ga, float screenWidth, float screenHeight, float renderXPos, float renderYPos, float renderWidth, float renderHeight, float &speedMultiplier)
+void RenderGUI(GA &ga, float screenWidth, float screenHeight, float renderXPos, float renderYPos, float renderWidth, float renderHeight, float &speedMultiplier, bool &isRunning)
 {
 
     // * ----------------------------------------------------------
@@ -24,9 +24,16 @@ void RenderGUI(GA &ga, float screenWidth, float screenHeight, float renderXPos, 
     GuiLabel({10, y, 100, 20}, "SETTINGS");
     y += 20;
 
-    // ! CHECK BOX
+    // ! BORDER CHECK BOX
     (GuiCheckBox({10, y, 20, 20}, "border", &ga.border));
     y += 25;
+
+    // ! PAUSE BTN
+    if (GuiButton({10, y, 150, 40}, (isRunning ? "PAUSE" : "RESUME")))
+    {
+        isRunning = !isRunning;
+    };
+    y += 45;
 
     // ! HUE SLIDER
     float hue = ga.BACKGROUND.h;

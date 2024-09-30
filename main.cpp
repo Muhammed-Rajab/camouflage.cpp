@@ -44,6 +44,9 @@ int main()
     float timeAccumulator = 0.0f;
     float updateInterval = 1.0f;
 
+    // ! SIMULATION RUN STATE
+    bool isRunning = false;
+
     while (!WindowShouldClose())
     {
 
@@ -59,11 +62,14 @@ int main()
 
         if (timeAccumulator >= (updateInterval / speedMultiplier))
         {
-            ga.Update();
+            if (isRunning)
+            {
+                ga.Update();
+            }
             timeAccumulator = 0.0f;
         }
 
-        RenderGUI(ga, screenWidth, screenHeight, (screenWidth / 2) - 300, (screenHeight / 2) - 300, 600, 600, speedMultiplier);
+        RenderGUI(ga, screenWidth, screenHeight, (screenWidth / 2) - 300, (screenHeight / 2) - 300, 600, 600, speedMultiplier, isRunning);
 
         EndDrawing();
     }
