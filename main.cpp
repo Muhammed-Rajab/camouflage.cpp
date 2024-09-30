@@ -33,8 +33,8 @@ int main()
     GuiSetStyle(DEFAULT, TEXT_COLOR_NORMAL, ColorToInt(WHITE));
 
     // ! ALGO SETUP
-    const int COL_COUNT = 50;
-    const int ROW_COUNT = 50;
+    const int COL_COUNT = 30;
+    const int ROW_COUNT = 30;
 
     // ! GENETIC ALGORITHM SETUP
     GA ga(ROW_COUNT, COL_COUNT, 0.0005, {31, 0.5, 0.5});
