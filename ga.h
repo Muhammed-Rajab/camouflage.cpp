@@ -11,7 +11,44 @@
 using PopulationVector = std::vector<HSLColor>;
 using SizeTVector = std::vector<std::size_t>;
 
-PopulationVector generateRandomPopulation(std::size_t count);
+class GA
+{
+private:
+    // ! EVERYTHING'S PUBLIC FOR NOW
+public:
+    std::size_t ROW_COUNT = 0;
+    std::size_t COL_COUNT = 0;
+    std::size_t POPULATION_SIZE = 0;
+
+    double MUTATION_RATE = 0.0005;
+    HSLColor BACKGROUND;
+
+    PopulationVector population;
+    SizeTVector fitnessScore;
+    SizeTVector SortedFitnessScoresIndices;
+
+    // ! GENERATION
+    PopulationVector generateRandomPopulation(std::size_t count);
+
+    // ! FITNESS CALCULATION
+    int calculateHueDifference(int h0, int h2);
+    SizeTVector calculatePopulationFitness();
+    SizeTVector getSortedFitnessScoresIndices();
+
+    // ! CROSSOVER
+    HSLColor singlePointCrossOver(const HSLColor &elite, const HSLColor &normie, const std::size_t eliteFitnessScore, const std::size_t normieFitnessScore);
+    PopulationVector getNextGeneration();
+
+    // ! RENDERING
+    void Run();
+    void renderPopulation(int xPos, int yPos, int width, int height, bool border);
+
+    // ! CONSTRUCTORS
+    GA(std::size_t row_count, std::size_t col_count, double mutation_rate, HSLColor background);
+};
+
+PopulationVector
+generateRandomPopulation(std::size_t count);
 
 int calculateHueDifference(int h1, int h2);
 

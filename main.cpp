@@ -11,9 +11,6 @@ float TextToFloat(const char *text)
     return (float)std::atof(text); // Convert the string to a float using standard C function
 }
 
-#define RAYGUI_IMPLEMENTATION
-#include "raygui.h"
-
 int main()
 {
 
@@ -69,7 +66,7 @@ int main()
 
         // if (GuiButton((Rectangle){24, 24, 120, 30}, "#191#Show Message"))
         //     std::cout << "hi\n";
-        GuiSlider(Rectangle{10, 10, 600, 20}, "Test", "Hello", &bgHue, 0.0f, 360.0f);
+        // GuiSlider(Rectangle{10, 10, 600, 20}, "Test", "Hello", &bgHue, 0.0f, 360.0f);
 
         // ! RENDER POPULATION
         renderPopulation(population, (screenWidth / 2) - 300, (screenHeight / 2) - 300, 600, 600, ROW_COUNT, COL_COUNT, true);
