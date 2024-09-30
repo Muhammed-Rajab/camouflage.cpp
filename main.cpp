@@ -40,7 +40,7 @@ int main()
     GA ga(ROW_COUNT, COL_COUNT, 0.0005, {31, 0.5, 0.5});
 
     // ! UPDATION SPEED CONTROLLER SETUP
-    float speedMultiplier = 10.0f;
+    float speedMultiplier = 6.0f;
     float timeAccumulator = 0.0f;
     float updateInterval = 1.0f;
 

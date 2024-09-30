@@ -26,7 +26,7 @@ void RenderGUI(GA &ga, float screenWidth, float screenHeight, float renderXPos, 
 
     // ! BORDER CHECK BOX
     (GuiCheckBox({10, y, 20, 20}, "border", &ga.border));
-    y += 25;
+    y += 27;
 
     // ! PAUSE BTN
     if (GuiButton({10, y, 150, 40}, (isRunning ? "PAUSE" : "RESUME")))
