@@ -83,7 +83,36 @@ HSLColor GA::breed(const HSLColor &elite, const HSLColor &normie, const std::siz
 
     if (rand() % 100 < this->MUTATION_RATE * 100)
     {
-        int mutationValue = GenerateRandomValue(-360, 360);
+        int mutationValue;
+        int prob = rand() % 100;
+        if (prob < 1)
+        {
+            mutationValue = GenerateRandomValue(-360, 360);
+        }
+        else if (prob < 20)
+        {
+            mutationValue = GenerateRandomValue(-240, 240);
+        }
+        else if (prob < 40)
+        {
+            mutationValue = GenerateRandomValue(-180, 180);
+        }
+        else if (prob < 60)
+        {
+            mutationValue = GenerateRandomValue(-120, 120);
+        }
+        else if (prob < 80)
+        {
+            mutationValue = GenerateRandomValue(-60, 60);
+        }
+        else if (prob < 85)
+        {
+            mutationValue = GenerateRandomValue(-30, 30);
+        }
+        else
+        {
+            mutationValue = GenerateRandomValue(-10, 10);
+        }
         newHue = abs((newHue + mutationValue)) % 360;
     }
 
