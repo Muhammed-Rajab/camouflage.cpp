@@ -28,12 +28,14 @@ int main()
     const int screenWidth = GetMonitorWidth(0);
     const int screenHeight = GetMonitorHeight(0);
     SetWindowSize(screenWidth, screenHeight);
-
     ToggleFullscreen();
 
+    // ! GUI SETUP
+    GuiSetStyle(DEFAULT, TEXT_COLOR_NORMAL, ColorToInt(WHITE));
+
     // ! ALGO SETUP
-    const int COL_COUNT = 10;
-    const int ROW_COUNT = 10;
+    const int COL_COUNT = 30;
+    const int ROW_COUNT = 30;
 
     HSLColor BACKGROUND_HSL = {31, 0.5, 0.5};
 
@@ -49,7 +51,7 @@ int main()
         ga.Render((screenWidth / 2) - 300, (screenHeight / 2) - 300, 600, 600);
         ga.Update();
 
-        RenderGUI(ga);
+        RenderGUI(ga, screenWidth, screenHeight, (screenWidth / 2) - 300, (screenHeight / 2) - 300, 600, 600);
 
         EndDrawing();
     }

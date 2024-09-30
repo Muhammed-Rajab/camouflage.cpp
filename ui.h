@@ -8,18 +8,56 @@ float TextToFloat(const char *text)
 
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
+#include "raylib.h"
 #include "ga.h"
 
-void RenderGUI(GA &ga)
+void RenderGUI(GA &ga, float screenWidth, float screenHeight, float renderXPos, float renderYPos, float renderWidth, float renderHeight)
 {
-    // ! TURN ON/OFF BORDER
-    (GuiCheckBox({100, 100, 20, 20}, "border", &ga.border));
 
+    // * ----------------------------------------------------------
+    // * WITHIN BOX
+    // * ----------------------------------------------------------
+    Rectangle groupBoxBounds{-1, 10, 200, GetMonitorHeight(0) - 20};
+
+    // ! BORDER BOX
+    GuiDrawRectangle(groupBoxBounds, 1, WHITE, Color{0, 0, 0, 0});
+
+    // ! SETTINGS LABEL
+    GuiLabel({10, 20, 100, 20}, "PROPERTIES");
+
+    // ! CHECK BOX
+    (GuiCheckBox({10, 40, 20, 20}, "border", &ga.border));
+
+    // ! HUE SLIDER
     float hue = ga.BACKGROUND.h;
-    if (GuiSlider({100, 120, 100, 20}, "", "hue", &hue, 0, 360))
+    GuiLabel({10, 65, 100, 20}, "HUE");
+    if (GuiSlider({10, 85, 150, 20}, "", "360", &hue, 0, 360))
     {
         ga.BACKGROUND.h = (int)hue;
     }
+
+    // ! ELITE RATIO SLIDER
+    float elite_ratio = ga.ELITE_RATIO;
+    GuiLabel({10, 110, 100, 20}, "ELITE");
+    if (GuiSlider({10, 135, 150, 20}, "0", "1", &elite_ratio, 0.0, 1.0))
+    {
+        ga.ELITE_RATIO = elite_ratio;
+    }
+
+    // * ----------------------------------------------------------
+    // * OUT OF BOX
+    // * ----------------------------------------------------------
+
+    // ! MUTATION RATE SLIDER
+    float mutation_rate = (float)ga.MUTATION_RATE;
+    GuiLabel({renderXPos, renderYPos - 55, 100, 20}, "MUTATION RATE");
+    if (GuiSlider({renderXPos - 4, renderYPos - 30, renderWidth + 4, 20}, "", "", &mutation_rate, 0.0, 1.0))
+    {
+        ga.MUTATION_RATE = (double)(mutation_rate);
+    }
+
+    // ! GENERATION COUNT LABEL
+    GuiLabel({renderXPos + renderWidth - 100, renderYPos - 55, 100, 20}, TextFormat("GENERATION: %ld", ga.GENERATION));
 }
 
 #endif
