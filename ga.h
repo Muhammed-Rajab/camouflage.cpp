@@ -16,6 +16,7 @@ class GA
 private:
     // ! EVERYTHING'S PUBLIC FOR NOW
 public:
+    std::size_t GENERATION = 0;
     std::size_t ROW_COUNT = 0;
     std::size_t COL_COUNT = 0;
     std::size_t POPULATION_SIZE = 0;
@@ -46,22 +47,5 @@ public:
     // ! CONSTRUCTORS
     GA(std::size_t row_count, std::size_t col_count, double mutation_rate, HSLColor background);
 };
-
-PopulationVector
-generateRandomPopulation(std::size_t count);
-
-int calculateHueDifference(int h1, int h2);
-
-SizeTVector calculatePopulationFitness(const PopulationVector &population, const HSLColor &background);
-
-SizeTVector getSortedFitnessScoresIndices(const SizeTVector &fitnessScore);
-
-void displayFitnessScore(const SizeTVector &fitnessScore);
-
-void renderPopulation(const PopulationVector &population, int xPos, int yPos, int width, int height, std::size_t ROW_COUNT, std::size_t COL_COUNT, bool border);
-
-HSLColor singlePointCrossOver(const HSLColor &elite, const HSLColor &normie, const std::size_t eliteFitnessScore, const std::size_t normieFitnessScore);
-
-PopulationVector getNextGeneration(const PopulationVector &population, const SizeTVector &fitnessScore, const SizeTVector &sortedFitnessScoreIndices);
 
 #endif
