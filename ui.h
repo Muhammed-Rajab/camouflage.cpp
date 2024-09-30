@@ -3,8 +3,9 @@
 
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
+#include "ga.h"
 
-void RenderGUI()
+void RenderGUI(GA &ga)
 {
 }
 

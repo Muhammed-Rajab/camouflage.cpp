@@ -134,7 +134,7 @@ void GA::Update()
     ++this->GENERATION;
 }
 
-void GA::Render(int xPos, int yPos, int width, int height, bool border)
+void GA::Render(int xPos, int yPos, int width, int height)
 {
     std::size_t pos = 0;
 
@@ -158,7 +158,7 @@ void GA::Render(int xPos, int yPos, int width, int height, bool border)
         }
     }
 
-    if (border)
+    if (this->border)
     {
         DrawRectangleLinesEx(Rectangle{(float)xPos - 4, (float)yPos - 4, (float)GRID_WIDTH * this->COL_COUNT + 4, (float)GRID_HEIGHT * this->ROW_COUNT + 4}, 4, WHITE);
     }

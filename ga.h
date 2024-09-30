@@ -51,12 +51,15 @@ public:
     double ELITE_RATIO = 0.05;
     HSLColor BACKGROUND = {0, 0, 0};
 
+    // ! UI STATE
+    bool border = false;
+
     // ! CONSTRUCTORS
     GA(std::size_t row_count, std::size_t col_count, double mutation_rate, HSLColor background);
 
     // ! RENDERING
     void Update();
-    void Render(int xPos, int yPos, int width, int height, bool border);
+    void Render(int xPos, int yPos, int width, int height);
 
     // ! STATS
     Stats Stat();
