@@ -6,6 +6,14 @@
 #include "ga.h"
 #include "hsl.h"
 
+float TextToFloat(const char *text)
+{
+    return (float)std::atof(text); // Convert the string to a float using standard C function
+}
+
+#define RAYGUI_IMPLEMENTATION
+#include "raygui.h"
+
 int main()
 {
 
@@ -27,8 +35,8 @@ int main()
     // ! ALGO SETUP
     std::size_t generation = 0;
 
-    const int COL_COUNT = 50;
-    const int ROW_COUNT = 50;
+    const int COL_COUNT = 10;
+    const int ROW_COUNT = 10;
 
     const int PADDING_X = 25;
     const int PADDING_Y = 25;
@@ -43,11 +51,14 @@ int main()
 
     PopulationVector population = generateRandomPopulation(POPULATION_SIZE);
 
+    float bgHue = 0.0f;
+
     while (!WindowShouldClose())
     {
         // ! CALCULATING THE BACKGROUND
         Vector2 mPos = GetMousePosition();
-        HSLColor BACKGROUND_HSL = {(int)((int)mPos.x % 360), 0.5, 0.5};
+        // HSLColor BACKGROUND_HSL = {(int)((int)mPos.x % 360), 0.5, 0.5};
+        HSLColor BACKGROUND_HSL = {bgHue, 0.5, 0.5};
         RGBColor BACKGROUND_RGB = HSLToRGB(BACKGROUND_HSL.h, BACKGROUND_HSL.s, BACKGROUND_HSL.l);
         Color BACKGROUND = {(unsigned char)BACKGROUND_RGB.r, (unsigned char)BACKGROUND_RGB.g, (unsigned char)BACKGROUND_RGB.b};
 
@@ -55,6 +66,10 @@ int main()
         ClearBackground(BACKGROUND);
 
         // * YOU DRAWING STARTS HERE ------------>
+
+        // if (GuiButton((Rectangle){24, 24, 120, 30}, "#191#Show Message"))
+        //     std::cout << "hi\n";
+        GuiSlider(Rectangle{10, 10, 600, 20}, "Test", "Hello", &bgHue, 0.0f, 360.0f);
 
         // ! RENDER POPULATION
         renderPopulation(population, (screenWidth / 2) - 300, (screenHeight / 2) - 300, 600, 600, ROW_COUNT, COL_COUNT, true);
