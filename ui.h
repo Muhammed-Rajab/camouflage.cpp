@@ -19,10 +19,6 @@ void RenderGUI(GA &ga, float screenWidth, float screenHeight, float renderXPos, 
     // * ----------------------------------------------------------
     // Rectangle groupBoxBounds{-1, 10, 200, GetMonitorHeight(0) - 20};
     float y = 20.0f;
-    Rectangle groupBoxBounds{-1, 10, 200, 280};
-
-    // ! BORDER BOX
-    GuiDrawRectangle(groupBoxBounds, 1, WHITE, Color{0, 0, 0, 0});
 
     // ! SETTINGS LABEL
     GuiLabel({10, y, 100, 20}, "SETTINGS");
@@ -65,7 +61,6 @@ void RenderGUI(GA &ga, float screenWidth, float screenHeight, float renderXPos, 
     Stats s = ga.Stat();
 
     // ! TOP FITNESS
-
     GuiLabel({10, y, 150, 20}, TextFormat("TOP FITNESS: %d", s.TOP_FITNESS_SCORE));
     y += 25;
     // ! MEDIAN FITNESS
@@ -74,6 +69,9 @@ void RenderGUI(GA &ga, float screenWidth, float screenHeight, float renderXPos, 
     // ! WORST FITNESS
     GuiLabel({10, y, 150, 20}, TextFormat("WORST FITNESS: %d", s.WORST_FITNESS_SCORE));
     y += 25;
+
+    // ! BORDER BOX
+    GuiDrawRectangle({-1, 10, 200, y}, 1, WHITE, Color{0, 0, 0, 0});
 
     // * ----------------------------------------------------------
     // * OUT OF BOX
