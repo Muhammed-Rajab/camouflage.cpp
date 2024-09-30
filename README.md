@@ -2,7 +2,7 @@
 
 A fun and visual🦎 way to see natural selection in action!
 
-[![Video](https://img.youtube.com/vi/A4Np_FtVxNE/maxresdefault.jpg)](https://www.youtube.com/watch?v=A4Np_FtVxNE&ab_channel=RajabKabeer)
+[![Video](screenshots/1.png)](https://www.youtube.com/watch?v=A4Np_FtVxNE&ab_channel=RajabKabeer)
 
 
 ## Description
