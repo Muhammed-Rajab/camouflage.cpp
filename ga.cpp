@@ -163,3 +163,19 @@ void GA::Render(int xPos, int yPos, int width, int height, bool border)
         DrawRectangleLinesEx(Rectangle{(float)xPos - 4, (float)yPos - 4, (float)GRID_WIDTH * this->COL_COUNT + 4, (float)GRID_HEIGHT * this->ROW_COUNT + 4}, 4, WHITE);
     }
 }
+
+// ! STATS
+Stats GA::Stat()
+{
+    Stats s;
+    s.BACKGROUND = this->BACKGROUND;
+    s.GENERATION = this->GENERATION;
+    s.ELITE_RATIO = this->ELITE_RATIO;
+    s.MUTATION_RATE = this->MUTATION_RATE;
+
+    s.TOP_FITNESS_SCORE = this->fitnessScores.at(this->sortedFitnessScoresIndices.at(0));
+    s.MEDIAN_FITNESS_SCORE = this->fitnessScores.at(this->sortedFitnessScoresIndices.at(this->sortedFitnessScoresIndices.size() / 2));
+    s.WORST_FITNESS_SCORE = this->fitnessScores.at(this->sortedFitnessScoresIndices.at(this->sortedFitnessScoresIndices.size() - 1));
+
+    return s;
+}
