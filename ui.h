@@ -38,8 +38,8 @@ void RenderGUI(GA &ga, float screenWidth, float screenHeight, float renderXPos, 
 
     // ! ELITE RATIO SLIDER
     float elite_ratio = ga.ELITE_RATIO;
-    GuiLabel({10, 110, 100, 20}, "ELITE");
-    if (GuiSlider({10, 135, 150, 20}, "0", "1", &elite_ratio, 0.0, 1.0))
+    GuiLabel({10, 110, 100, 20}, "ELITE RATIO");
+    if (GuiSlider({10, 135, 150, 20}, "", TextFormat("%.3f", elite_ratio), &elite_ratio, 0.005, 1.0))
     {
         ga.ELITE_RATIO = elite_ratio;
     }
@@ -51,7 +51,7 @@ void RenderGUI(GA &ga, float screenWidth, float screenHeight, float renderXPos, 
     // ! MUTATION RATE SLIDER
     float mutation_rate = (float)ga.MUTATION_RATE;
     GuiLabel({renderXPos, renderYPos - 55, 100, 20}, "MUTATION RATE");
-    if (GuiSlider({renderXPos - 4, renderYPos - 30, renderWidth + 4, 20}, "", "", &mutation_rate, 0.0, 1.0))
+    if (GuiSlider({renderXPos - 4, renderYPos - 30, renderWidth + 4, 20}, "", TextFormat("%f", mutation_rate), &mutation_rate, 0.0, 0.5))
     {
         ga.MUTATION_RATE = (double)(mutation_rate);
     }
