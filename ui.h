@@ -18,7 +18,7 @@ void RenderGUI(GA &ga, float screenWidth, float screenHeight, float renderXPos, 
     // * WITHIN BOX
     // * ----------------------------------------------------------
     // Rectangle groupBoxBounds{-1, 10, 200, GetMonitorHeight(0) - 20};
-    Rectangle groupBoxBounds{-1, 10, 200, 160};
+    Rectangle groupBoxBounds{-1, 10, 200, 230};
 
     // ! BORDER BOX
     GuiDrawRectangle(groupBoxBounds, 1, WHITE, Color{0, 0, 0, 0});
@@ -32,7 +32,7 @@ void RenderGUI(GA &ga, float screenWidth, float screenHeight, float renderXPos, 
     // ! HUE SLIDER
     float hue = ga.BACKGROUND.h;
     GuiLabel({10, 65, 100, 20}, "HUE");
-    if (GuiSlider({10, 85, 150, 20}, "", TextFormat("%d", hue), &hue, 0, 360))
+    if (GuiSlider({10, 85, 150, 20}, "", TextFormat("%d", ga.BACKGROUND.h), &hue, 0, 360))
     {
         ga.BACKGROUND.h = (int)hue;
     }
@@ -45,6 +45,16 @@ void RenderGUI(GA &ga, float screenWidth, float screenHeight, float renderXPos, 
         ga.ELITE_RATIO = elite_ratio;
     }
 
+    // ! STATS
+    Stats s = ga.Stat();
+
+    // ! TOP FITNESS
+    GuiLabel({10, 160, 150, 20}, TextFormat("TOP FITNESS: %d", s.TOP_FITNESS_SCORE));
+    // ! MEDIAN FITNESS
+    GuiLabel({10, 185, 150, 20}, TextFormat("MEDIAN FITNESS: %d", s.MEDIAN_FITNESS_SCORE));
+    // ! WORST FITNESS
+    GuiLabel({10, 210, 150, 20}, TextFormat("WORST FITNESS: %d", s.WORST_FITNESS_SCORE));
+
     // * ----------------------------------------------------------
     // * OUT OF BOX
     // * ----------------------------------------------------------
@@ -52,7 +62,7 @@ void RenderGUI(GA &ga, float screenWidth, float screenHeight, float renderXPos, 
     // ! MUTATION RATE SLIDER
     float mutation_rate = (float)ga.MUTATION_RATE;
     GuiLabel({renderXPos, renderYPos - 55, 100, 20}, "MUTATION RATE");
-    if (GuiSlider({renderXPos - 4, renderYPos - 30, renderWidth + 4, 20}, "", TextFormat("%f", mutation_rate), &mutation_rate, 0.0, 0.5))
+    if (GuiSlider({renderXPos - 1, renderYPos - 30, renderWidth + 1, 20}, "", TextFormat("%f", mutation_rate), &mutation_rate, 0.0, 0.5))
     {
         ga.MUTATION_RATE = (double)(mutation_rate);
     }

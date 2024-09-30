@@ -160,7 +160,7 @@ void GA::Render(int xPos, int yPos, int width, int height)
 
     if (this->border)
     {
-        DrawRectangleLinesEx(Rectangle{(float)xPos - 4, (float)yPos - 4, (float)GRID_WIDTH * this->COL_COUNT + 4, (float)GRID_HEIGHT * this->ROW_COUNT + 4}, 4, WHITE);
+        DrawRectangleLinesEx(Rectangle{(float)xPos - 1, (float)yPos - 1, (float)GRID_WIDTH * this->COL_COUNT + 1, (float)GRID_HEIGHT * this->ROW_COUNT + 1}, 1, WHITE);
     }
 }
 
