@@ -48,45 +48,41 @@ int main()
 
     PopulationVector population = generateRandomPopulation(POPULATION_SIZE);
 
-    float bgHue = 0.0f;
+    HSLColor BACKGROUND_HSL = {30, 0.5, 0.5};
+    RGBColor BACKGROUND_RGB = HSLToRGB(BACKGROUND_HSL.h, BACKGROUND_HSL.s, BACKGROUND_HSL.l);
+    Color BACKGROUND = {(unsigned char)BACKGROUND_RGB.r, (unsigned char)BACKGROUND_RGB.g, (unsigned char)BACKGROUND_RGB.b};
+
+    GA ga(ROW_COUNT, COL_COUNT, 0.0005, BACKGROUND_HSL);
 
     while (!WindowShouldClose())
     {
-        // ! CALCULATING THE BACKGROUND
-        Vector2 mPos = GetMousePosition();
-        // HSLColor BACKGROUND_HSL = {(int)((int)mPos.x % 360), 0.5, 0.5};
-        HSLColor BACKGROUND_HSL = {bgHue, 0.5, 0.5};
-        RGBColor BACKGROUND_RGB = HSLToRGB(BACKGROUND_HSL.h, BACKGROUND_HSL.s, BACKGROUND_HSL.l);
-        Color BACKGROUND = {(unsigned char)BACKGROUND_RGB.r, (unsigned char)BACKGROUND_RGB.g, (unsigned char)BACKGROUND_RGB.b};
-
         BeginDrawing();
         ClearBackground(BACKGROUND);
 
         // * YOU DRAWING STARTS HERE ------------>
 
-        // if (GuiButton((Rectangle){24, 24, 120, 30}, "#191#Show Message"))
-        //     std::cout << "hi\n";
-        // GuiSlider(Rectangle{10, 10, 600, 20}, "Test", "Hello", &bgHue, 0.0f, 360.0f);
+        // // ! RENDER POPULATION
+        // renderPopulation(population, (screenWidth / 2) - 300, (screenHeight / 2) - 300, 600, 600, ROW_COUNT, COL_COUNT, true);
 
-        // ! RENDER POPULATION
-        renderPopulation(population, (screenWidth / 2) - 300, (screenHeight / 2) - 300, 600, 600, ROW_COUNT, COL_COUNT, true);
+        // // ! CALCULATE POPULATION FITNESS
+        // SizeTVector fitnessScore = calculatePopulationFitness(population, BACKGROUND_HSL);
 
-        // ! CALCULATE POPULATION FITNESS
-        SizeTVector fitnessScore = calculatePopulationFitness(population, BACKGROUND_HSL);
+        // // ! GET SORTED FITNESS
+        // SizeTVector sortedFitnessScoreIndices = getSortedFitnessScoresIndices(fitnessScore);
 
-        // ! GET SORTED FITNESS
-        SizeTVector sortedFitnessScoreIndices = getSortedFitnessScoresIndices(fitnessScore);
+        // // ! RENDER STATS
+        // std::ostringstream oss;
+        // oss << "GEN: " << generation << "\n\n";
+        // oss << "TOP FITNESS: " << fitnessScore.at(sortedFitnessScoreIndices.at(0)) << "\n\n";
+        // oss << "MEDIAN FITNESS: " << fitnessScore.at(sortedFitnessScoreIndices.at(sortedFitnessScoreIndices.size() / 2)) << "\n\n";
+        // oss << "WORST FITNESS: " << fitnessScore.at(sortedFitnessScoreIndices.at(sortedFitnessScoreIndices.size() - 1)) << "\n";
+        // DrawText(oss.str().c_str(), 10, 10, 20, WHITE);
 
-        // ! RENDER STATS
-        std::ostringstream oss;
-        oss << "GEN: " << generation << "\n\n";
-        oss << "TOP FITNESS: " << fitnessScore.at(sortedFitnessScoreIndices.at(0)) << "\n\n";
-        oss << "MEDIAN FITNESS: " << fitnessScore.at(sortedFitnessScoreIndices.at(sortedFitnessScoreIndices.size() / 2)) << "\n\n";
-        oss << "WORST FITNESS: " << fitnessScore.at(sortedFitnessScoreIndices.at(sortedFitnessScoreIndices.size() - 1)) << "\n";
-        DrawText(oss.str().c_str(), 10, 10, 20, WHITE);
+        // // ! GENERATE NEXT POPULATION FROM CURRENT POPULATION, SORTED FITNESS SCORE INDICES, AND FITNESS SCORES.
+        // population = getNextGeneration(population, fitnessScore, sortedFitnessScoreIndices);
 
-        // ! GENERATE NEXT POPULATION FROM CURRENT POPULATION, SORTED FITNESS SCORE INDICES, AND FITNESS SCORES.
-        population = getNextGeneration(population, fitnessScore, sortedFitnessScoreIndices);
+        ga.Render((screenWidth / 2) - 300, (screenHeight / 2) - 300, 600, 600, true);
+        ga.Update();
 
         // DrawFPS(10, 10);
         EndDrawing();

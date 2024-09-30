@@ -24,24 +24,24 @@ public:
     HSLColor BACKGROUND;
 
     PopulationVector population;
-    SizeTVector fitnessScore;
-    SizeTVector SortedFitnessScoresIndices;
+    SizeTVector fitnessScores;
+    SizeTVector sortedFitnessScoresIndices;
 
     // ! GENERATION
-    PopulationVector generateRandomPopulation(std::size_t count);
+    void generateRandomPopulation();
 
     // ! FITNESS CALCULATION
-    int calculateHueDifference(int h0, int h2);
-    SizeTVector calculatePopulationFitness();
-    SizeTVector getSortedFitnessScoresIndices();
+    int calculateHueDifference(int h1, int h2);
+    void calculatePopulationFitness();
+    void calculateSortedFitnessScoresIndices();
 
     // ! CROSSOVER
     HSLColor singlePointCrossOver(const HSLColor &elite, const HSLColor &normie, const std::size_t eliteFitnessScore, const std::size_t normieFitnessScore);
-    PopulationVector getNextGeneration();
+    void getNextGeneration();
 
     // ! RENDERING
-    void Run();
-    void renderPopulation(int xPos, int yPos, int width, int height, bool border);
+    void Update();
+    void Render(int xPos, int yPos, int width, int height, bool border);
 
     // ! CONSTRUCTORS
     GA(std::size_t row_count, std::size_t col_count, double mutation_rate, HSLColor background);
