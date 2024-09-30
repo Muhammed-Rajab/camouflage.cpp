@@ -13,7 +13,6 @@
 // ! CONSTRUCTORS
 GA::GA(std::size_t row_count, std::size_t col_count, double mutation_rate, HSLColor background)
 {
-
     this->ROW_COUNT = row_count;
     this->COL_COUNT = col_count;
     this->BACKGROUND = background;
@@ -25,6 +24,7 @@ GA::GA(std::size_t row_count, std::size_t col_count, double mutation_rate, HSLCo
     this->fitnessScores = SizeTVector(this->POPULATION_SIZE);
     this->sortedFitnessScoresIndices = SizeTVector(this->POPULATION_SIZE);
 
+    // ! INITIALIZE RANDOM POPULATION
     this->generateRandomPopulation();
 }
 
@@ -73,7 +73,7 @@ void GA::calculateSortedFitnessScoresIndices()
 }
 
 // ! CROSSOVER
-HSLColor GA::singlePointCrossOver(const HSLColor &elite, const HSLColor &normie, const std::size_t eliteFitnessScore, const std::size_t normieFitnessScore)
+HSLColor GA::breed(const HSLColor &elite, const HSLColor &normie, const std::size_t eliteFitnessScore, const std::size_t normieFitnessScore)
 {
     double totalFitness = eliteFitnessScore + normieFitnessScore;
     double w1 = eliteFitnessScore / totalFitness;
@@ -96,12 +96,11 @@ HSLColor GA::singlePointCrossOver(const HSLColor &elite, const HSLColor &normie,
 
 void GA::getNextGeneration()
 {
-    const double ELITE_RATIO = 0.05;
-    std::size_t maxEliteIndex = static_cast<std::size_t>(ELITE_RATIO * this->sortedFitnessScoresIndices.size());
+    std::size_t maxEliteIndex = static_cast<std::size_t>(this->ELITE_RATIO * this->sortedFitnessScoresIndices.size());
 
     PopulationVector newPopulation(population.size());
 
-    // Append elites to population
+    // ! ADDING ELITES TO THE NEW POPULATION
     for (std::size_t index = 0; index < maxEliteIndex; ++index)
     {
         newPopulation.at(index) = (this->population.at(this->sortedFitnessScoresIndices.at(index)));
@@ -110,15 +109,15 @@ void GA::getNextGeneration()
     for (std::size_t index = maxEliteIndex; index < population.size(); ++index)
     {
         const std::size_t eliteIndex = GenerateRandomValue(0, maxEliteIndex - 1);
-
-        const HSLColor elite = population.at(this->sortedFitnessScoresIndices.at(eliteIndex));
-
         const std::size_t normieIndex = GenerateRandomValue(maxEliteIndex, this->sortedFitnessScoresIndices.size() - 1);
 
+        const HSLColor elite = population.at(this->sortedFitnessScoresIndices.at(eliteIndex));
         const HSLColor normie = population.at(this->sortedFitnessScoresIndices.at(normieIndex));
 
-        const HSLColor child = singlePointCrossOver(elite, normie, this->fitnessScores.at(this->sortedFitnessScoresIndices.at(eliteIndex)), this->fitnessScores.at(this->sortedFitnessScoresIndices.at(normieIndex)));
+        const std::size_t eliteFitnessScore = this->fitnessScores.at(this->sortedFitnessScoresIndices.at(eliteIndex));
+        const std::size_t normieFitnessScore = this->fitnessScores.at(this->sortedFitnessScoresIndices.at(normieIndex));
 
+        const HSLColor child = this->breed(elite, normie, eliteFitnessScore, normieFitnessScore);
         newPopulation.at(index) = child;
     }
 
@@ -130,8 +129,6 @@ void GA::Update()
 {
     this->calculatePopulationFitness();
     this->calculateSortedFitnessScoresIndices();
-
-    // CALCULATE NEXT GENERATION
     this->getNextGeneration();
 
     ++this->GENERATION;

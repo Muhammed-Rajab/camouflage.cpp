@@ -20,6 +20,7 @@ private:
     std::size_t POPULATION_SIZE = 0;
 
     double MUTATION_RATE = 0.0005;
+    double ELITE_RATIO = 0.05;
     HSLColor BACKGROUND = {0, 0, 0};
 
     PopulationVector population;
@@ -35,7 +36,7 @@ private:
     void calculateSortedFitnessScoresIndices();
 
     // ! CROSSOVER
-    HSLColor singlePointCrossOver(const HSLColor &elite, const HSLColor &normie, const std::size_t eliteFitnessScore, const std::size_t normieFitnessScore);
+    HSLColor breed(const HSLColor &elite, const HSLColor &normie, const std::size_t eliteFitnessScore, const std::size_t normieFitnessScore);
     void getNextGeneration();
 
 public:
