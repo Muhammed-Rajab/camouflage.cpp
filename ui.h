@@ -32,7 +32,7 @@ void RenderGUI(GA &ga, float screenWidth, float screenHeight, float renderXPos, 
     // ! HUE SLIDER
     float hue = ga.BACKGROUND.h;
     GuiLabel({10, 65, 100, 20}, "HUE");
-    if (GuiSlider({10, 85, 150, 20}, "", "360", &hue, 0, 360))
+    if (GuiSlider({10, 85, 150, 20}, "", TextFormat("%d", hue), &hue, 0, 360))
     {
         ga.BACKGROUND.h = (int)hue;
     }
