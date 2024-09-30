@@ -23,12 +23,11 @@ int main()
     SetConfigFlags(FLAG_BORDERLESS_WINDOWED_MODE);
     SetConfigFlags(FLAG_WINDOW_HIGHDPI);
     InitWindow(800, 800, title);
-    SetTargetFPS(60);
-
     const int screenWidth = GetMonitorWidth(0);
     const int screenHeight = GetMonitorHeight(0);
     SetWindowSize(screenWidth, screenHeight);
     ToggleFullscreen();
+    SetTargetFPS(60);
 
     // ! GUI SETUP
     GuiSetStyle(DEFAULT, TEXT_COLOR_NORMAL, ColorToInt(WHITE));
@@ -37,14 +36,19 @@ int main()
     const int COL_COUNT = 50;
     const int ROW_COUNT = 50;
 
-    HSLColor BACKGROUND_HSL = {31, 0.5, 0.5};
+    // ! GENETIC ALGORITHM SETUP
+    GA ga(ROW_COUNT, COL_COUNT, 0.0005, {31, 0.5, 0.5});
 
-    GA ga(ROW_COUNT, COL_COUNT, 0.0005, BACKGROUND_HSL);
-
-    std::size_t frameCount = 0;
+    // ! UPDATION SPEED CONTROLLER SETUP
+    float speedMultiplier = 10.0f;
+    float timeAccumulator = 0.0f;
+    float updateInterval = 1.0f;
 
     while (!WindowShouldClose())
     {
+
+        timeAccumulator += GetFrameTime();
+
         BeginDrawing();
 
         ClearBackground(HSLToColor(ga.BACKGROUND));
@@ -53,17 +57,15 @@ int main()
 
         ga.Render((screenWidth / 2) - 300, (screenHeight / 2) - 300, 600, 600);
 
-        if (frameCount % 60 == 0)
+        if (timeAccumulator >= (updateInterval / speedMultiplier))
         {
             ga.Update();
-            frameCount %= 60;
+            timeAccumulator = 0.0f;
         }
 
-        RenderGUI(ga, screenWidth, screenHeight, (screenWidth / 2) - 300, (screenHeight / 2) - 300, 600, 600);
+        RenderGUI(ga, screenWidth, screenHeight, (screenWidth / 2) - 300, (screenHeight / 2) - 300, 600, 600, speedMultiplier);
 
         EndDrawing();
-
-        ++frameCount;
     }
 
     CloseWindow();
