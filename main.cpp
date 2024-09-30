@@ -34,8 +34,8 @@ int main()
     GuiSetStyle(DEFAULT, TEXT_COLOR_NORMAL, ColorToInt(WHITE));
 
     // ! ALGO SETUP
-    const int COL_COUNT = 10;
-    const int ROW_COUNT = 10;
+    const int COL_COUNT = 50;
+    const int ROW_COUNT = 50;
 
     HSLColor BACKGROUND_HSL = {31, 0.5, 0.5};
 

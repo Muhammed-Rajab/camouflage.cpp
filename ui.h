@@ -17,7 +17,8 @@ void RenderGUI(GA &ga, float screenWidth, float screenHeight, float renderXPos, 
     // * ----------------------------------------------------------
     // * WITHIN BOX
     // * ----------------------------------------------------------
-    Rectangle groupBoxBounds{-1, 10, 200, GetMonitorHeight(0) - 20};
+    // Rectangle groupBoxBounds{-1, 10, 200, GetMonitorHeight(0) - 20};
+    Rectangle groupBoxBounds{-1, 10, 200, 160};
 
     // ! BORDER BOX
     GuiDrawRectangle(groupBoxBounds, 1, WHITE, Color{0, 0, 0, 0});
@@ -39,7 +40,7 @@ void RenderGUI(GA &ga, float screenWidth, float screenHeight, float renderXPos, 
     // ! ELITE RATIO SLIDER
     float elite_ratio = ga.ELITE_RATIO;
     GuiLabel({10, 110, 100, 20}, "ELITE RATIO");
-    if (GuiSlider({10, 135, 150, 20}, "", TextFormat("%.3f", elite_ratio), &elite_ratio, 0.005, 1.0))
+    if (GuiSlider({10, 135, 150, 20}, "", TextFormat("%.3f", elite_ratio), &elite_ratio, 0.0005, 1.0))
     {
         ga.ELITE_RATIO = elite_ratio;
     }
