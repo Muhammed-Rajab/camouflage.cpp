@@ -45,7 +45,6 @@ int main()
         ClearBackground(BACKGROUND);
 
         // * YOU DRAWING STARTS HERE ------------>
-
         ga.Render((screenWidth / 2) - 300, (screenHeight / 2) - 300, 600, 600, true);
         ga.Update();
 
